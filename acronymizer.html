@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>acronymizer</title>
+</head>
+<body>
+
+<input>
+<button onclick="document.querySelector('span').innerText = acronymize(document.querySelector('input').value);">Acronymize!</button>
+<p>Output: <span></span></p>
+
+<script>
+let dict;
+
+async function readFile(file) {
+let response = await fetch(file);
+let content = await response.text();
+return content.split("\n");
+}
+
+readFile("https://greensofa24.github.io/files/text4.txt")
+.then(function(result) {
+dict = result;
+});
+
+function acronymize(input) {
+let output = dict;
+let i = 0;
+while (output.length > 1 && i < 100) {
+output = output.filter((word) => word[i] == input[i]);
+i++;
+}
+return input.substring(0, i);
+}
+</script>
+</body>
+</html>
